@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#063b78">
+  <meta name="description" content="Cash Boi - ব্যক্তিগত আয়, ব্যয়, পাওনা ও দেনার হিসাব">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <title>ক্যাশ বই</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="app">
+    <header class="topbar">
+      <div class="brand"><span class="brand-icon">৳</span><span>ক্যাশ বই</span></div>
+      <div class="user-area">
+        <div class="welcome">স্বাগতম, <b id="userName">Md Nishan Ali</b></div>
+        <button class="profile-btn" id="profileBtn">ব্যক্তিগত</button>
+      </div>
+    </header>
+
+    <main class="content">
+      <!-- HOME -->
+      <section class="page active" id="homePage">
+        <div class="balance-card">
+          <div class="balance-top">
+            <span>মোট ব্যালেন্স <span class="eye">◉</span></span>
+            <strong id="totalBalance">৳ ০</strong>
+          </div>
+          <div class="wallet-row">
+            <div class="wallet"><span class="wallet-icon">▣</span><div><small>নগদ</small><b id="cashBalance">৳ ০</b></div></div>
+            <div class="divider"></div>
+            <div class="wallet"><span class="wallet-icon">↙</span><div><small>পাওনা</small><b id="dueBalance">৳ ০</b></div></div>
+            <div class="divider"></div>
+            <div class="wallet"><span class="wallet-icon">↗</span><div><small>দেনা</small><b id="debtBalance">৳ ০</b></div></div>
+          </div>
+        </div>
+
+        <div class="month-head">
+          <h2>মাসের হিসাব</h2>
+          <select id="monthSelect"></select>
+        </div>
+        <div class="income-expense">
+          <div class="summary-card income"><span class="circle">↑</span><div><small>এই মাসের আয়</small><strong id="monthIncome">৳ ০</strong></div></div>
+          <div class="summary-card expense"><span class="circle">↓</span><div><small>এই মাসের ব্যয়</small><strong id="monthExpense">৳ ০</strong></div></div>
+        </div>
+
+        <div class="section-title"><h2>দ্রুত অ্যাকশন</h2><span></span></div>
+        <div class="quick-grid">
+          <button class="quick" data-go="income"><span class="qicon green">+</span><b>আয় যোগ করুন</b></button>
+          <button class="quick" data-go="expense"><span class="qicon red">−</span><b>ব্যয় যোগ করুন</b></button>
+          <button class="quick" data-go="due"><span class="qicon blue">৳</span><b>পাওনা যোগ করুন</b></button>
+          <button class="quick" data-go="debt"><span class="qicon teal">♥</span><b>দেনা যোগ করুন</b></button>
+        </div>
+
+        <div class="section-title recent-head"><h2>সাম্প্রতিক লেনদেন</h2><button id="seeAll">আরও দেখুন ›</button></div>
+        <div id="recentList" class="transaction-list"></div>
+      </section>
+
+      <!-- LIST PAGES -->
+      <section class="page" id="incomePage">
+        <div class="page-heading"><div><h1>আয়</h1><p>তোমার সব আয়ের হিসাব</p></div><button class="primary" id="addIncomeBtn">+ আয়</button></div>
+        <div id="incomeList" class="transaction-list"></div>
+      </section>
+
+      <section class="page" id="expensePage">
+        <div class="page-heading"><div><h1>ব্যয়</h1><p>তোমার সব খরচের হিসাব</p></div><button class="primary" id="addExpenseBtn">+ ব্যয়</button></div>
+        <div id="expenseList" class="transaction-list"></div>
+      </section>
+
+      <section class="page" id="duePage">
+        <div class="page-heading"><div><h1>পাওনা</h1><p>যাদের কাছ থেকে টাকা পাও</p></div><button class="primary" id="addDueBtn">+ পাওনা</button></div>
+        <div id="dueList" class="person-list"></div>
+      </section>
+
+      <section class="page" id="debtPage">
+        <div class="page-heading"><div><h1>দেনা</h1><p>যাদের টাকা দিতে হবে</p></div><button class="primary" id="addDebtBtn">+ দেনা</button></div>
+        <div id="debtList" class="person-list"></div>
+      </section>
+    </main>
+
+    <nav class="bottom-nav">
+      <button class="nav-item active" data-page="home"><span>⌂</span><small>হোম</small></button>
+      <button class="nav-item" data-page="income"><span>↑</span><small>আয়</small></button>
+      <button class="nav-item" data-page="expense"><span>↓</span><small>ব্যয়</small></button>
+      <button class="nav-item" data-page="due"><span>♥</span><small>পাওনা</small></button>
+      <button class="nav-item" data-page="debt"><span>৳</span><small>দেনা</small></button>
+    </nav>
+  </div>
+
+  <!-- MODAL -->
+  <div class="modal-backdrop" id="modalBackdrop">
+    <div class="modal">
+      <div class="modal-head"><h2 id="modalTitle">নতুন আয়</h2><button id="closeModal">×</button></div>
+      <form id="entryForm">
+        <input type="hidden" id="editId">
+        <input type="hidden" id="entryType">
+        <div id="personFields" class="hidden">
+          <label>নাম <span>*</span><input id="personName" maxlength="80" placeholder="যেমন: Sojib"></label>
+          <label>পদবী <input id="designation" placeholder="ঐচ্ছিক"></label>
+          <label>ঠিকানা <input id="address" placeholder="ঐচ্ছিক"></label>
+          <label>ফোন নম্বর <input id="phone" inputmode="tel" placeholder="ঐচ্ছিক"></label>
+        </div>
+        <label>ক্যাটাগরি <span>*</span>
+          <input id="category" maxlength="60" placeholder="যেমন: চা, বেতন, বাজার" required>
+        </label>
+        <label id="amountLabel">টাকা <span>*</span><input id="amount" type="number" min="0.01" step="0.01" inputmode="decimal" placeholder="0" required></label>
+        <div id="depositFields" class="hidden">
+          <label>জমা <input id="deposit" type="number" min="0" step="0.01" inputmode="decimal" value="0"></label>
+          <div class="balance-preview">বাকি: <b id="remainingPreview">৳ ০</b></div>
+        </div>
+        <label id="noteLabel">নোট <input id="note" maxlength="120" placeholder="ঐচ্ছিক"></label>
+        <button class="submit-btn" type="submit">সেভ করুন</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+  <script src="app.js"></script>
+</body>
+</html>
