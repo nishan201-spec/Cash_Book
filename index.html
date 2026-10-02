@@ -1,122 +1,178 @@
 <!doctype html>
 <html lang="bn">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#063b78">
-  <meta name="description" content="Cash Boi - ব্যক্তিগত আয়, ব্যয়, পাওনা ও দেনার হিসাব">
-  <link rel="manifest" href="manifest.json">
-  <link rel="icon" href="icon.svg" type="image/svg+xml">
-  <title>ক্যাশ বই</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0b4f91">
+<link rel="manifest" href="manifest.json">
+<title>ক্যাশ বই</title>
+<style>
+*{box-sizing:border-box}html,body{margin:0;background:#f5f7fb;color:#17212b;font-family:system-ui,-apple-system,"Noto Sans Bengali","Noto Sans",sans-serif}
+button,input,select{font:inherit}.app{max-width:720px;margin:auto;min-height:100vh;padding-bottom:88px}
+header{height:120px;background:#fff;border-bottom:1px solid #edf0f4;display:flex;align-items:center;justify-content:space-between;padding:22px 20px}
+.brand{display:flex;align-items:center;gap:12px}.logo{width:64px;height:64px;border-radius:20px;background:#0b4f91;color:#fff;display:grid;place-items:center;font-size:30px;font-weight:900;box-shadow:0 8px 20px #0b4f9130}.brand h1{margin:0;color:#0b4f91;font-size:28px}.personal{border:1px solid #efd98e;background:#fff9e7;color:#9b7414;border-radius:24px;padding:10px 17px;font-weight:800}
+.page{display:none;padding:22px 20px}.page.active{display:block}
+.balance{background:linear-gradient(135deg,#0b4f91,#08427e);color:#fff;border-radius:34px;padding:28px 24px;box-shadow:0 18px 35px #0b4f9130}.balrow{display:flex;justify-content:space-between;align-items:center}.balrow b:first-child{font-size:22px}.big{font-size:34px;font-weight:950}.accounts{display:grid;grid-template-columns:repeat(3,1fr);margin-top:28px}.accounts div{padding:0 12px;border-right:1px solid #ffffff42}.accounts div:last-child{border:0}.accounts small{display:block;opacity:.9}.accounts strong{font-size:18px}
+.section-head{display:flex;align-items:center;justify-content:space-between;margin:24px 2px 12px}.section-head h2{margin:0;font-size:24px}.section-head a{color:#0b4f91;font-weight:900}
+.monthrow{display:flex;align-items:center;justify-content:space-between;gap:10px}.monthrow h2{font-size:28px}.month{padding:12px 16px;border:1px solid #dfe5eb;background:#fff;border-radius:17px}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:14px}.stat{border-radius:25px;padding:17px 18px}.stat.green{background:#dcf7e4}.stat.red{background:#ffdfe5}.stat small{display:block}.stat strong{font-size:24px}
+.quick{display:grid;grid-template-columns:1fr 1fr;gap:14px}.quick button{min-height:128px;background:#fff;border:1px solid #e5e9ee;border-radius:25px;box-shadow:0 8px 25px #17212b0b;font-weight:900;font-size:17px}.qicon{width:56px;height:56px;border-radius:50%;display:grid;place-items:center;margin:0 auto 12px;font-size:29px}.qg{background:#def7e7;color:#15994b}.qr{background:#ffe1e6;color:#e5354f}.qb{background:#e5f2ff;color:#167fc8}.qt{background:#def8f4;color:#0aa29b}
+.list{display:grid;gap:10px}.item{background:#fff;border:1px solid #e8edf2;border-radius:22px;padding:16px 14px;display:flex;gap:12px;align-items:center;box-shadow:0 7px 22px #17212b09}.icon{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;font-size:25px;flex:0 0 auto}.inbg{background:#dff7e7;color:#15994b}.outbg{background:#ffe2e7;color:#e43d55}.main{flex:1;min-width:0}.main b{display:block;font-size:18px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.meta{font-size:12px;color:#8b949d;margin-top:4px}.tag{display:inline-block;border-radius:12px;padding:3px 8px;font-size:11px;font-weight:900;margin-right:4px}.tag.in{background:#dcf7e4;color:#198d48}.tag.out{background:#ffe0e5;color:#d83e54}.amount{font-weight:950;font-size:18px;white-space:nowrap}.amount.in{color:#17964a}.amount.out{color:#d93f53}.trash{width:42px;height:42px;border:0;border-radius:13px;background:#f2f6f9;color:#6d7b86;font-size:20px}
+.form{background:#fff;border:1px solid #e8edf2;border-radius:24px;padding:18px;box-shadow:0 8px 24px #17212b0a}.field{margin-bottom:13px}.field label{display:block;font-weight:900;margin-bottom:6px}.field input,.field select{width:100%;padding:13px 14px;border:1px solid #dce3e9;border-radius:13px;background:#fff;outline:none}.field input:focus,.field select:focus{border-color:#0b4f91}.primary{width:100%;border:0;border-radius:14px;padding:14px;background:#0b4f91;color:#fff;font-weight:950}.substats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:15px 0}.mini{background:#fff;border:1px solid #e5e9ee;border-radius:18px;padding:13px}.mini small{display:block;color:#737d86}.mini strong{font-size:20px}
+.person{background:#fff;border:1px solid #e7ecf0;border-radius:23px;padding:16px;box-shadow:0 7px 22px #17212b09}.pname{font-size:21px;font-weight:950;color:#0b4f91}.pmeta{color:#7b858e;font-size:13px}.boxes{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:12px}.boxes div{background:#f7f9fb;border-radius:12px;text-align:center;padding:10px 4px}.boxes small{display:block;color:#7a838b}.actions{display:flex;gap:8px;margin-top:10px}.actions button{flex:1;padding:11px;border:0;border-radius:12px;font-weight:900}.deposit{background:#0b4f91;color:#fff}.secondary{background:#eef3f7;color:#0b4f91}
+.empty{text-align:center;color:#929aa2;padding:34px 10px}
+.bottom{position:fixed;z-index:20;bottom:0;left:50%;transform:translateX(-50%);width:min(720px,100%);height:78px;background:#fff;border-top:1px solid #e7ebef;display:grid;grid-template-columns:repeat(5,1fr);padding:6px 8px calc(6px + env(safe-area-inset-bottom))}.bottom button{border:0;background:#fff;color:#707980;border-radius:20px;font-weight:900}.bottom button.active{background:#e8f2ff;color:#0b4f91}.bottom i{display:block;font-style:normal;font-size:23px;line-height:25px}
+@media(max-width:430px){header{height:112px;padding:18px 15px}.logo{width:58px;height:58px}.brand h1{font-size:25px}.personal{padding:8px 12px}.page{padding:18px 14px}.balance{padding:24px 18px}.big{font-size:29px}.accounts{margin-top:24px}.accounts div{padding:0 7px}.accounts strong{font-size:15px}.quick button{min-height:118px}.section-head h2{font-size:22px}}
+</style>
 </head>
 <body>
-  <div id="app">
-    <header class="topbar">
-      <div class="brand"><span class="brand-icon">৳</span><span>ক্যাশ বই</span></div>
-      <div class="user-area">
-        <div class="welcome">স্বাগতম, <b id="userName">Md Nishan Ali</b></div>
-        <button class="profile-btn" id="profileBtn">ব্যক্তিগত</button>
-      </div>
-    </header>
+<div class="app">
+<header><div class="brand"><div class="logo">৳</div><h1>ক্যাশ বই</h1></div><div class="personal">ব্যক্তিগত</div></header>
 
-    <main class="content">
-      <!-- HOME -->
-      <section class="page active" id="homePage">
-        <div class="balance-card">
-          <div class="balance-top">
-            <span>মোট ব্যালেন্স <span class="eye">◉</span></span>
-            <strong id="totalBalance">৳ ০</strong>
-          </div>
-          <div class="wallet-row">
-            <div class="wallet"><span class="wallet-icon">▣</span><div><small>নগদ</small><b id="cashBalance">৳ ০</b></div></div>
-            <div class="divider"></div>
-            <div class="wallet"><span class="wallet-icon">↙</span><div><small>পাওনা</small><b id="dueBalance">৳ ০</b></div></div>
-            <div class="divider"></div>
-            <div class="wallet"><span class="wallet-icon">↗</span><div><small>দেনা</small><b id="debtBalance">৳ ০</b></div></div>
-          </div>
-        </div>
+<main>
+<section id="home" class="page active">
+<div class="balance"><div class="balrow"><b>মোট ব্যালেন্স ◉</b><span class="big" id="totalBalance">৳ ০</span></div>
+<div class="accounts"><div>▣<small>নগদ</small><strong id="cash">৳ ০</strong></div><div>↙<small>পাওনা</small><strong id="receivableTotal">৳ ০</strong></div><div>↗<small>দেনা</small><strong id="payableTotal">৳ ০</strong></div></div></div>
 
-        <div class="month-head">
-          <h2>মাসের হিসাব</h2>
-          <select id="monthSelect"></select>
-        </div>
-        <div class="income-expense">
-          <div class="summary-card income"><span class="circle">↑</span><div><small>এই মাসের আয়</small><strong id="monthIncome">৳ ০</strong></div></div>
-          <div class="summary-card expense"><span class="circle">↓</span><div><small>এই মাসের ব্যয়</small><strong id="monthExpense">৳ ০</strong></div></div>
-        </div>
+<div class="section-head"><h2>আজকের হিসাব</h2></div>
+<div class="stats"><div class="stat green"><small>আজকের আয়</small><strong id="todayIncome">৳ ০</strong></div><div class="stat red"><small>আজকের ব্যয়</small><strong id="todayExpense">৳ ০</strong></div></div>
 
-        <div class="section-title"><h2>দ্রুত অ্যাকশন</h2><span></span></div>
-        <div class="quick-grid">
-          <button class="quick" data-go="income"><span class="qicon green">+</span><b>আয় যোগ করুন</b></button>
-          <button class="quick" data-go="expense"><span class="qicon red">−</span><b>ব্যয় যোগ করুন</b></button>
-          <button class="quick" data-go="due"><span class="qicon blue">৳</span><b>পাওনা যোগ করুন</b></button>
-          <button class="quick" data-go="debt"><span class="qicon teal">♥</span><b>দেনা যোগ করুন</b></button>
-        </div>
+<div class="section-head"><h2>দ্রুত অ্যাকশন</h2></div>
+<div class="quick"><button onclick="go('income')"><div class="qicon qg">+</div>আয় যোগ করুন</button><button onclick="go('expense')"><div class="qicon qr">−</div>ব্যয় যোগ করুন</button><button onclick="go('receivable')"><div class="qicon qb">৳</div>পাওনা যোগ করুন</button><button onclick="go('payable')"><div class="qicon qt">♥</div>দেনা যোগ করুন</button></div>
 
-        <div class="section-title recent-head"><h2>সাম্প্রতিক লেনদেন</h2><button id="seeAll">আরও দেখুন ›</button></div>
-        <div id="recentList" class="transaction-list"></div>
-      </section>
+<div class="section-head"><h2>আজকের লেনদেন</h2><a onclick="go('income')">আরও দেখুন ›</a></div>
+<div id="todayList" class="list"></div>
+</section>
 
-      <!-- LIST PAGES -->
-      <section class="page" id="incomePage">
-        <div class="page-heading"><div><h1>আয়</h1><p>তোমার সব আয়ের হিসাব</p></div><button class="primary" id="addIncomeBtn">+ আয়</button></div>
-        <div id="incomeList" class="transaction-list"></div>
-      </section>
+<section id="income" class="page">
+<div class="section-head"><h2>আয়</h2><button class="primary" style="width:auto;padding:11px 18px" onclick="toggleForm('incomeForm')">+ আয়</button></div>
+<div class="substats"><div class="mini"><small>আজকের আয়</small><strong id="incomeToday">৳ ০</strong></div><div class="mini"><small>এই মাসের আয়</small><strong id="incomeMonth">৳ ০</strong></div></div>
+<div class="form" id="incomeForm" style="display:none"><div class="field"><label>ক্যাটাগরি *</label><input id="incomeCat" placeholder="কিসের জন্য টাকা পেয়েছেন"></div><div class="field"><label>টাকা *</label><input id="incomeAmt" type="number" min="0"></div><button class="primary" onclick="addTx('income')">সংরক্ষণ করুন</button></div>
+<div class="section-head"><h2>আয়ের তালিকা</h2><select class="month" id="incomeMonthSelect" onchange="render()"></select></div><div id="incomeList" class="list"></div>
+</section>
 
-      <section class="page" id="expensePage">
-        <div class="page-heading"><div><h1>ব্যয়</h1><p>তোমার সব খরচের হিসাব</p></div><button class="primary" id="addExpenseBtn">+ ব্যয়</button></div>
-        <div id="expenseList" class="transaction-list"></div>
-      </section>
+<section id="expense" class="page">
+<div class="section-head"><h2>ব্যয়</h2><button class="primary" style="width:auto;padding:11px 18px" onclick="toggleForm('expenseForm')">+ ব্যয়</button></div>
+<div class="substats"><div class="mini"><small>আজকের ব্যয়</small><strong id="expenseToday">৳ ০</strong></div><div class="mini"><small>এই মাসের ব্যয়</small><strong id="expenseMonth">৳ ০</strong></div></div>
+<div class="form" id="expenseForm" style="display:none"><div class="field"><label>ক্যাটাগরি *</label><input id="expenseCat" placeholder="কিসের জন্য টাকা খরচ করেছেন"></div><div class="field"><label>টাকা *</label><input id="expenseAmt" type="number" min="0"></div><button class="primary" onclick="addTx('expense')">সংরক্ষণ করুন</button></div>
+<div class="section-head"><h2>ব্যয়ের তালিকা</h2><select class="month" id="expenseMonthSelect" onchange="render()"></select></div><div id="expenseList" class="list"></div>
+</section>
 
-      <section class="page" id="duePage">
-        <div class="page-heading"><div><h1>পাওনা</h1><p>যাদের কাছ থেকে টাকা পাও</p></div><button class="primary" id="addDueBtn">+ পাওনা</button></div>
-        <div id="dueList" class="person-list"></div>
-      </section>
+<section id="receivable" class="page">
+<div class="section-head"><h2>পাওনা</h2><button class="primary" style="width:auto;padding:11px 18px" onclick="toggleForm('receivableForm')">+ পাওনা</button></div>
+<div class="substats"><div class="mini"><small>আজকের পাওনা</small><strong id="receivableToday">৳ ০</strong></div><div class="mini"><small>এই মাসের পাওনা</small><strong id="receivableMonth">৳ ০</strong></div></div>
+<div class="form" id="receivableForm" style="display:none"><div class="field"><label>নাম *</label><input id="rn"></div><div class="field"><label>পদবী</label><input id="rr"></div><div class="field"><label>ঠিকানা</label><input id="ra"></div><div class="field"><label>ফোন নম্বর (অপশনাল)</label><input id="rp"></div><div class="field"><label>ক্যাটাগরি *</label><input id="rc" placeholder="কিসের জন্য টাকা পাবেন"></div><div class="field"><label>টাকা *</label><input id="rm" type="number" min="0"></div><button class="primary" onclick="addPerson('receivable')">সংরক্ষণ করুন</button></div>
+<div class="section-head"><h2>পাওনার তালিকা</h2><select class="month" id="receivableMonthSelect" onchange="render()"></select></div><div id="receivableList" class="list"></div>
+</section>
 
-      <section class="page" id="debtPage">
-        <div class="page-heading"><div><h1>দেনা</h1><p>যাদের টাকা দিতে হবে</p></div><button class="primary" id="addDebtBtn">+ দেনা</button></div>
-        <div id="debtList" class="person-list"></div>
-      </section>
-    </main>
+<section id="payable" class="page">
+<div class="section-head"><h2>দেনা</h2><button class="primary" style="width:auto;padding:11px 18px" onclick="toggleForm('payableForm')">+ দেনা</button></div>
+<div class="substats"><div class="mini"><small>আজকের দেনা</small><strong id="payableToday">৳ ০</strong></div><div class="mini"><small>এই মাসের দেনা</small><strong id="payableMonth">৳ ০</strong></div></div>
+<div class="form" id="payableForm" style="display:none"><div class="field"><label>নাম *</label><input id="pn"></div><div class="field"><label>পদবী</label><input id="pr"></div><div class="field"><label>ঠিকানা</label><input id="pa"></div><div class="field"><label>ফোন নম্বর (অপশনাল)</label><input id="pp"></div><div class="field"><label>ক্যাটাগরি *</label><input id="pc" placeholder="কিসের জন্য টাকা দেবেন"></div><div class="field"><label>টাকা *</label><input id="pm" type="number" min="0"></div><button class="primary" onclick="addPerson('payable')">সংরক্ষণ করুন</button></div>
+<div class="section-head"><h2>দেনার তালিকা</h2><select class="month" id="payableMonthSelect" onchange="render()"></select></div><div id="payableList" class="list"></div>
+</section>
+</main>
+</div>
 
-    <nav class="bottom-nav">
-      <button class="nav-item active" data-page="home"><span>⌂</span><small>হোম</small></button>
-      <button class="nav-item" data-page="income"><span>↑</span><small>আয়</small></button>
-      <button class="nav-item" data-page="expense"><span>↓</span><small>ব্যয়</small></button>
-      <button class="nav-item" data-page="due"><span>♥</span><small>পাওনা</small></button>
-      <button class="nav-item" data-page="debt"><span>৳</span><small>দেনা</small></button>
-    </nav>
-  </div>
+<nav class="bottom"><button data-p="home" class="active" onclick="go('home')"><i>⌂</i>হোম</button><button data-p="income" onclick="go('income')"><i>↑</i>আয়</button><button data-p="expense" onclick="go('expense')"><i>↓</i>ব্যয়</button><button data-p="receivable" onclick="go('receivable')"><i>♥</i>পাওনা</button><button data-p="payable" onclick="go('payable')"><i>৳</i>দেনা</button></nav>
 
-  <!-- MODAL -->
-  <div class="modal-backdrop" id="modalBackdrop">
-    <div class="modal">
-      <div class="modal-head"><h2 id="modalTitle">নতুন আয়</h2><button id="closeModal">×</button></div>
-      <form id="entryForm">
-        <input type="hidden" id="editId">
-        <input type="hidden" id="entryType">
-        <div id="personFields" class="hidden">
-          <label>নাম <span>*</span><input id="personName" maxlength="80" placeholder="যেমন: Sojib"></label>
-          <label>পদবী <input id="designation" placeholder="ঐচ্ছিক"></label>
-          <label>ঠিকানা <input id="address" placeholder="ঐচ্ছিক"></label>
-          <label>ফোন নম্বর <input id="phone" inputmode="tel" placeholder="ঐচ্ছিক"></label>
-        </div>
-        <label>ক্যাটাগরি <span>*</span>
-          <input id="category" maxlength="60" placeholder="যেমন: চা, বেতন, বাজার" required>
-        </label>
-        <label id="amountLabel">টাকা <span>*</span><input id="amount" type="number" min="0.01" step="0.01" inputmode="decimal" placeholder="0" required></label>
-        <div id="depositFields" class="hidden">
-          <label>জমা <input id="deposit" type="number" min="0" step="0.01" inputmode="decimal" value="0"></label>
-          <div class="balance-preview">বাকি: <b id="remainingPreview">৳ ০</b></div>
-        </div>
-        <label id="noteLabel">নোট <input id="note" maxlength="120" placeholder="ঐচ্ছিক"></label>
-        <button class="submit-btn" type="submit">সেভ করুন</button>
-      </form>
-    </div>
-  </div>
+<script>
+const KEY='kash_boi_offline_v3';
+let db=JSON.parse(localStorage.getItem(KEY)||'{"tx":[],"people":[]}');
 
-  <div class="toast" id="toast"></div>
-  <script src="app.js"></script>
+const taka=n=>'৳ '+Number(n||0).toLocaleString('bn-BD');
+const now=new Date();
+const pad=n=>String(n).padStart(2,'0');
+const dateKey=d=>d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
+const monthKey=d=>d.getFullYear()+'-'+pad(d.getMonth()+1);
+const todayKey=dateKey(new Date());
+const currentMonth=monthKey(new Date());
+function stamp(){let d=new Date();return {iso:d.toISOString(),day:dateKey(d),month:monthKey(d),date:d.toLocaleDateString('bn-BD'),time:d.toLocaleTimeString('bn-BD',{hour:'2-digit',minute:'2-digit'})}}
+function save(){localStorage.setItem(KEY,JSON.stringify(db));render()}
+function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function go(p){document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));document.getElementById(p).classList.add('active');document.querySelectorAll('.bottom button').forEach(x=>x.classList.toggle('active',x.dataset.p===p));scrollTo(0,0)}
+function toggleForm(id){let x=document.getElementById(id);x.style.display=x.style.display==='none'?'block':'none'}
+function addTx(type){
+ let cat=document.getElementById(type==='income'?'incomeCat':'expenseCat').value.trim();
+ let amount=Number(document.getElementById(type==='income'?'incomeAmt':'expenseAmt').value);
+ if(!cat||!amount||amount<0)return alert('ক্যাটাগরি ও সঠিক টাকা দিন');
+ db.tx.push({id:crypto.randomUUID(),type,cat,amount,...stamp()});
+ document.getElementById(type==='income'?'incomeCat':'expenseCat').value='';
+ document.getElementById(type==='income'?'incomeAmt':'expenseAmt').value='';
+ save();
+}
+function addPerson(type){
+ let p=type==='receivable'
+ ?{name:rn.value.trim(),role:rr.value,address:ra.value,phone:rp.value,cat:rc.value.trim(),amount:Number(rm.value)}
+ :{name:pn.value.trim(),role:pr.value,address:pa.value,phone:pp.value,cat:pc.value.trim(),amount:Number(pm.value)};
+ if(!p.name||!p.cat||!p.amount||p.amount<0)return alert('নাম, ক্যাটাগরি ও সঠিক টাকা দিন');
+ let person={id:crypto.randomUUID(),type,deposited:0,...p,...stamp()};
+ db.people.push(person);
+ // মূল টাকা একবারই আয়/ব্যয়ে যোগ হবে; পরের জমা আবার যোগ হবে না
+ db.tx.push({id:crypto.randomUUID(),type:type==='receivable'?'income':'expense',cat:p.cat,amount:p.amount,linked:person.id,source:type,...stamp()});
+ save();
+}
+function addDeposit(id){
+ let p=db.people.find(x=>x.id===id); if(!p)return;
+ let remaining=p.amount-p.deposited;
+ let a=Number(prompt('জমা টাকা লিখুন (অবশিষ্ট '+remaining+')'));
+ if(!a||a<=0||a>remaining)return alert('অবশিষ্ট টাকার মধ্যে সঠিক জমার পরিমাণ দিন');
+ p.deposited+=a;p.updated=stamp();save();
+}
+function deleteTx(id){if(confirm('এই লেনদেনটি মুছে ফেলবেন?')){db.tx=db.tx.filter(x=>x.id!==id);save()}}
+function deletePerson(id){if(confirm('এই পাওনা/দেনার হিসাবটি মুছে ফেলবেন?')){db.people=db.people.filter(x=>x.id!==id);/* মূল আয়/ব্যয় ইতিহাস রাখা হবে */save()}}
+function txCard(x){
+ let inx=x.type==='income';
+ return `<div class="item"><div class="icon ${inx?'inbg':'outbg'}">${inx?'↑':'↓'}</div><div class="main"><b>${esc(x.cat)}</b><div class="meta"><span class="tag ${inx?'in':'out'}">${inx?'আয়':'ব্যয়'}</span> • ${esc(x.date)}, ${esc(x.time)}${x.source?' • '+(x.source==='receivable'?'পাওনা থেকে আয়':'দেনা থেকে ব্যয়'):''}</div></div><div class="amount ${inx?'in':'out'}">${inx?'+':'−'}${taka(x.amount)}</div><button class="trash" onclick="deleteTx('${x.id}')">🗑</button></div>`
+}
+function personCard(p){
+ let rem=p.amount-p.deposited, complete=rem===0;
+ return `<div class="person"><div class="pname">${esc(p.name)}</div>${p.role?`<div class="pmeta">${esc(p.role)}</div>`:''}<div class="pmeta">${esc(p.cat)} • ${esc(p.date)}, ${esc(p.time)}</div>${p.address?`<div class="pmeta">ঠিকানা: ${esc(p.address)}</div>`:''}${p.phone?`<div class="pmeta">ফোন: ${esc(p.phone)}</div>`:''}<div class="boxes"><div><small>টাকা</small><b>${taka(p.amount)}</b></div><div><small>জমা</small><b>${taka(p.deposited)}</b></div><div><small>অবশিষ্ট</small><b>${taka(rem)}</b></div></div><div class="actions">${complete?'<button class="secondary" disabled>সম্পূর্ণ পরিশোধ</button>':`<button class="deposit" onclick="addDeposit('${p.id}')">জমা যোগ করুন</button>`}<button class="secondary" onclick="deletePerson('${p.id}')">মুছুন</button></div></div>`
+}
+function fillMonths(){
+ ['incomeMonthSelect','expenseMonthSelect','receivableMonthSelect','payableMonthSelect'].forEach(id=>{
+  let s=document.getElementById(id), old=s.value;
+  if(s.options.length===0){for(let i=0;i<12;i++){let d=new Date();d.setDate(1);d.setMonth(d.getMonth()-i);let o=document.createElement('option');o.value=monthKey(d);o.textContent=d.toLocaleDateString('bn-BD',{month:'long',year:'numeric'});s.appendChild(o)}}
+  if(old)s.value=old; else s.value=currentMonth;
+ });
+}
+function sum(arr){return arr.reduce((a,x)=>a+Number(x.amount||0),0)}
+function render(){
+ fillMonths();
+ let todayTx=db.tx.filter(x=>x.day===todayKey), incAll=db.tx.filter(x=>x.type==='income'), outAll=db.tx.filter(x=>x.type==='expense');
+ let incToday=sum(todayTx.filter(x=>x.type==='income')), outToday=sum(todayTx.filter(x=>x.type==='expense'));
+ let incTotal=sum(incAll),outTotal=sum(outAll);
+ let recOpen=sum(db.people.filter(p=>p.type==='receivable').map(p=>({amount:p.amount-p.deposited})));
+ let payOpen=sum(db.people.filter(p=>p.type==='payable').map(p=>({amount:p.amount-p.deposited})));
+ document.getElementById('totalBalance').textContent=taka(incTotal-outTotal);
+ document.getElementById('cash').textContent=taka(incTotal-outTotal);
+ document.getElementById('receivableTotal').textContent=taka(recOpen);
+ document.getElementById('payableTotal').textContent=taka(payOpen);
+ document.getElementById('todayIncome').textContent=taka(incToday);
+ document.getElementById('todayExpense').textContent=taka(outToday);
+ document.getElementById('incomeToday').textContent=taka(incToday);
+ document.getElementById('expenseToday').textContent=taka(outToday);
+
+ let mi=monthKey(new Date());
+ let incM=sum(incAll.filter(x=>x.month===mi)),outM=sum(outAll.filter(x=>x.month===mi));
+ document.getElementById('incomeMonth').textContent=taka(incM);
+ document.getElementById('expenseMonth').textContent=taka(outM);
+
+ let recToday=sum(db.people.filter(p=>p.type==='receivable'&&p.day===todayKey)),payToday=sum(db.people.filter(p=>p.type==='payable'&&p.day===todayKey));
+ let recMonth=sum(db.people.filter(p=>p.type==='receivable'&&p.month===mi)),payMonth=sum(db.people.filter(p=>p.type==='payable'&&p.month===mi));
+ document.getElementById('receivableToday').textContent=taka(recToday);document.getElementById('payableToday').textContent=taka(payToday);
+ document.getElementById('receivableMonth').textContent=taka(recMonth);document.getElementById('payableMonth').textContent=taka(payMonth);
+
+ document.getElementById('todayList').innerHTML=[...todayTx].sort((a,b)=>b.iso.localeCompare(a.iso)).map(txCard).join('')||'<div class="empty">আজ এখনো কোনো লেনদেন নেই</div>';
+
+ let im=document.getElementById('incomeMonthSelect').value,em=document.getElementById('expenseMonthSelect').value,rm=document.getElementById('receivableMonthSelect').value,pm=document.getElementById('payableMonthSelect').value;
+ document.getElementById('incomeList').innerHTML=incAll.filter(x=>x.month===im).sort((a,b)=>b.iso.localeCompare(a.iso)).map(txCard).join('')||'<div class="empty">এই মাসে কোনো আয় নেই</div>';
+ document.getElementById('expenseList').innerHTML=outAll.filter(x=>x.month===em).sort((a,b)=>b.iso.localeCompare(a.iso)).map(txCard).join('')||'<div class="empty">এই মাসে কোনো ব্যয় নেই</div>';
+ document.getElementById('receivableList').innerHTML=db.people.filter(x=>x.type==='receivable'&&x.month===rm).sort((a,b)=>b.iso.localeCompare(a.iso)).map(personCard).join('')||'<div class="empty">এই মাসে কোনো পাওনা নেই</div>';
+ document.getElementById('payableList').innerHTML=db.people.filter(x=>x.type==='payable'&&x.month===pm).sort((a,b)=>b.iso.localeCompare(a.iso)).map(personCard).join('')||'<div class="empty">এই মাসে কোনো দেনা নেই</div>';
+}
+render();
+if('serviceWorker' in navigator) window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js'));
+</script>
 </body>
 </html>

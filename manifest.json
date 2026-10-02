@@ -1,10 +1,10 @@
 {
-  "name": "ক্যাশ বই",
+  "name": "ক্যাশ বই — Offline",
   "short_name": "ক্যাশ বই",
   "start_url": "./index.html",
   "display": "standalone",
-  "background_color": "#f7f9fc",
-  "theme_color": "#063b78",
+  "background_color": "#f5f7fb",
+  "theme_color": "#0b4f91",
   "lang": "bn",
-  "icons": [{"src":"icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}]
+  "icons": []
 }
